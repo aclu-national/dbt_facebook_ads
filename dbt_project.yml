@@ -15,6 +15,8 @@ vars:
     ad_history: "{{ ref('stg_facebook_ads__ad_history') }}"
     ad_set_history: "{{ ref('stg_facebook_ads__ad_set_history') }}"
     basic_ad: "{{ ref('stg_facebook_ads__basic_ad') }}"
+    basic_ad_region: "{{ ref('stg_facebook_ads__basic_ad_region') }}"
+    basic_ad_platform: "{{ ref('stg_facebook_ads__basic_ad_platform') }}"
     campaign_history: "{{ ref('stg_facebook_ads__campaign_history') }}"
     creative_history: "{{ ref('stg_facebook_ads__creative_history') }}"
     url_tag: "{{ ref('stg_facebook_ads__url_tag') }}"
