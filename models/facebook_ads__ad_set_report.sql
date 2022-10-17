@@ -5,7 +5,7 @@ with report as (
     select *
     from {{ var('basic_ad') }}
 
-), 
+),
 
 accounts as (
 
@@ -41,7 +41,7 @@ ads as (
 
 joined as (
 
-    select 
+    select
         report.date_day,
         accounts.account_id,
         accounts.account_name,
@@ -59,17 +59,36 @@ joined as (
         sum(report.spend) as spend
 
         {{ fivetran_utils.persist_pass_through_columns(pass_through_variable='facebook_ads__basic_ad_passthrough_metrics', transform = 'sum') }}
-    from report 
+    from report
     left join accounts
         on report.account_id = accounts.account_id
-    left join ads 
+    left join ads
         on report.ad_id = ads.ad_id
     left join campaigns
         on ads.campaign_id = campaigns.campaign_id
     left join ad_sets
         on ads.ad_set_id = ad_sets.ad_set_id
     {{ dbt_utils.group_by(12) }}
+),
+
+backfill as (
+
+  select *
+  from {{ source('backfill', 'stg_facebook_ads__bpi_backfill__ad_set_report') }}
+
+),
+
+final as (
+
+  select *
+  from joined
+
+  union all
+
+  select *
+  from backfill
+
 )
 
 select *
-from joined
+from final

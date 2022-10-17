@@ -1,9 +1,17 @@
 version: 2
 
+sources:
+  - name: backfill
+    database: dev
+    schema: dw_marketing_sources
+    tables:
+      - name: stg_facebook_ads__bpi_backfill__ad_set_report
+        description: Static export from retired FB Ads account not accessible via Fivetran connector.
+
 models:
   - name: facebook_ads__url_report
     description: Each record represents the daily performance of a Facebook ad at the URL level.
-    tests:     
+    tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - date_day
@@ -33,7 +41,7 @@ models:
       - name: creative_id
         description: The ID of the related creative.
       - name: creative_name
-        description: The name of the related creative.     
+        description: The name of the related creative.
       - name: base_url
         description: The base URL of the ad, extracted from the page_link and template_page_link.
         tests:
