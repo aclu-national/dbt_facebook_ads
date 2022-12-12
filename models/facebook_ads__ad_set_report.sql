@@ -15,12 +15,12 @@ backfill as (
 
 unioned as (
 
-    select * 
+    select *, 'Fivetran' as sync_source
     from intermediate
 
     union 
 
-    select * 
+    select *, 'Backfill' as sync_source
     from backfill 
 )
 
