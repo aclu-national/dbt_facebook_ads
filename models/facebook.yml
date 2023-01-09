@@ -202,3 +202,56 @@ models:
         description: The value assigned to the url tag object associated with this record.
       - name: type
         description: The type assigned to the url tag object e.g. 'AD_VIDEO'.
+
+  - name: facebook_ads__ad_set_platform_report
+    description: Each record represents the platform-specific daily performance of an ad set. Combines Fivetran-synced data with backfilled BPI data. 
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - account_name
+            - campaign_name
+            - ad_set_name 
+            - platform 
+    columns:
+      - name: date_day
+        description: The date of the performance.
+      - name: account_name
+        description: The name of the related account.
+      - name: campaign_name
+        description: The name of the related campaign.
+      - name: platform
+        description: The platform through which the ad set was served (Facebook or Instagram).
+      - name: ad_set_name
+        description: The name of the related ad set.
+      - name: impressions
+        description: The number of impressions the ad set had on the given day.
+      - name: spend
+        description: The spend on the ad set in the given day.
+
+  - name: facebook_ads__ad_set_region_report
+    description: Each record represents the region-specific daily performance of an ad set. Combines Fivetran-synced data with backfilled BPI data. 
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - account_name
+            - campaign_name
+            - ad_set_name 
+            - region 
+    columns:
+      - name: date_day
+        description: The date of the performance.
+      - name: account_name
+        description: The name of the related account.
+      - name: campaign_name
+        description: The name of the related campaign.
+      - name: region
+        description: The region (state) in which the ad set was served.
+      - name: ad_set_name
+        description: The name of the related ad set.
+      - name: impressions
+        description: The number of impressions the ad set had on the given day.
+      - name: spend
+        description: The spend on the ad set in the given day.
+      
